@@ -1517,7 +1517,7 @@ pre code {
     }
 
     .col-md-8 {
-        width: 66.66667%
+        width: 100%
     }
 
     .col-md-9 {
@@ -1649,7 +1649,7 @@ pre code {
     }
 
     .col-md-offset-2 {
-        margin-left: 16.66667%
+        margin-left: 0%
     }
 
     .col-md-offset-3 {
@@ -3402,7 +3402,7 @@ tbody.collapse.in {
     position: absolute;
     top: 100%;
     left: 0;
-    z-index: 1000;
+    z-index: 2100;
     display: none;
     float: left;
     min-width: 160px;
@@ -3506,7 +3506,7 @@ tbody.collapse.in {
     right: 0;
     bottom: 0;
     top: 0;
-    z-index: 990
+    z-index: 2000
 }
 
 .pull-right>.dropdown-menu {
@@ -6180,4 +6180,58 @@ textarea {
     margin-right: 5px
 }
 
-/*# sourceMappingURL=main.70a66962.map*/
+.download-button {
+    background-color: #0c7cf4;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 100px;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    /* Add this line to make the text bold */
+    cursor: pointer;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    /* Make sure the button appears above the background */
+}
+
+.download-work-button {
+    background-color: #ff0000;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    /* border-radius: 100px; */
+    text-decoration: none;
+    font-family: sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    /* Add this line to make the text bold */
+    cursor: pointer;
+    position: relative;
+    z-index: 1000;
+    /* Make sure the button appears above the background */
+}
+
+.bokeh-container {
+    width: 100%;
+}
+
+.iframe-container {
+    display: flex;
+    width: 100%;
+    /* Make the container occupy the full width */
+    overflow-x: auto;
+    /* Add horizontal scrolling if needed */
+}
+
+.bokeh-iframe {
+    width: 100%;
+    /* Each iframe occupies the full width */
+    border: none;
+    /* Remove border to avoid unnecessary spacing */
+}
