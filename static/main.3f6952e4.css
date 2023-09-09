@@ -5630,7 +5630,7 @@ button.close {
 #site-border-top {
     background: #000;
     position: fixed;
-    z-index: 1
+    z-index: 12000
 }
 
 #site-border-left,
@@ -6213,7 +6213,7 @@ textarea {
     /* Add this line to make the text bold */
     cursor: pointer;
     position: relative;
-    z-index: 1000;
+    z-index: 1;
     /* Make sure the button appears above the background */
 }
 
