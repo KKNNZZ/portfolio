@@ -44,9 +44,13 @@ def submit_form():
             data = request.form.to_dict()
             write_to_csv(data)
             return redirect('/thankyou.html')
+<<<<<<< HEAD
         # In your except blocks:
         except Exception as e:
             logging.exception("Exception occurred")
+=======
+        except:
+>>>>>>> 31044c2a42c9767b2b55d24c01c17da0c456e25b
             return 'did not save to database'
     else:
         return 'Something went wrong, try again.'
@@ -65,6 +69,7 @@ def password():
     return render_template("work2.html", count=count, suggestions=suggestions)
 
 
+<<<<<<< HEAD
 import img_classification_models
 #import the trained models
 @app.route('/upload', methods=['POST'])
@@ -96,6 +101,32 @@ def upload():
             logging.exception("Exception occurred during image classification.")
             return f'Something went wrong with uploading of image. Error: {str(e)}'
     return 'No image file received.'
+=======
+# import img_classification_models
+# #import the trained models
+# @app.route('/upload', methods=['POST'])
+# def upload():
+#     if 'imageFile' in request.files:
+#         try:
+#             image = request.files['imageFile']
+#             image.save('uploaded_image.jpg')
+#             result_mnv2 = img_classification_models.mobilnet_v2('uploaded_image.jpg')
+#             result_cnn = img_classification_models.simple_CNN('uploaded_image.jpg')
+#             result_rn50 = img_classification_models.resnet_50('uploaded_image.jpg')
+#             if result_mnv2 and result_cnn and result_rn50:
+#                 return jsonify({
+#                     "mnv2": result_mnv2,
+#                     "cnn": result_cnn,
+#                     "rn50": result_rn50
+                    
+#                 })
+#             else:
+#                 return 'Classification results are invalid.'
+#         except Exception as e:
+#             return f'An error occurred: {str(e)}'
+
+#     return 'No image file received.'
+>>>>>>> 31044c2a42c9767b2b55d24c01c17da0c456e25b
 
 if __name__ == '__main__':
     app.run()

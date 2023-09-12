@@ -22,7 +22,13 @@ def mobilnet_v2(img_dir, n=3):
 
     results = []
     for eachPred, eachProb in zip(predictions, probabilities):
+<<<<<<< HEAD
         results.append(f'{eachPred.capitalize()}: {eachProb:.1f}% ')
+=======
+        class_label = eachPred.capitalize()
+        probability = eachProb  # Convert probability to percentage
+        results.append(f"{class_label}: {probability:.1f}%")
+>>>>>>> 31044c2a42c9767b2b55d24c01c17da0c456e25b
 
     return ', '.join(results)
 
@@ -66,9 +72,15 @@ def simple_CNN(img_dir, n=3):
 
     results = []
     for prob, class_idx in zip(top_probabilities, top_class_indices):
+<<<<<<< HEAD
         class_label = str(class_idx.item())
         class_name = class_translation.get(class_label, "Unknown")
         results.append(f"{class_name}: {prob*100:.1f}%")
+=======
+        class_label = class_translation.get(str(class_idx.item()), "Unknown")
+        probability = prob * 100  # Convert probability to percentage
+        results.append(f"{class_label}: {probability:.1f}%")
+>>>>>>> 31044c2a42c9767b2b55d24c01c17da0c456e25b
 
     return ', '.join(results)
 
@@ -88,17 +100,35 @@ def resnet_50(img_dir, n=3):
     img_array = np.expand_dims(img_array, axis=0)
     img_array /= 255.0  # Normalize the image data
 
+<<<<<<< HEAD
     # Perform classification
     predictions = model.predict(img_array)
     top_n = n  # Number of top predictions to display
 
     # Get the indices of the top N predictions
     top_indices = np.argsort(predictions[0])[::-1][:top_n]
+=======
+    predictions = model(img_array)
+>>>>>>> 31044c2a42c9767b2b55d24c01c17da0c456e25b
 
+    # Get the indices that would sort the array in descending order
+    sorted_indices = np.argsort(predictions, axis=1)[:, ::-1]
+    # Get the top n indices
+    top_n_indices = sorted_indices[:, :n]
+    
     results = []
+<<<<<<< HEAD
     for i in range(top_n):
         class_label = class_translation.get(str(top_indices[i]), "Unknown")
         probability = predictions[0][top_indices[i]]
         results.append(f"{class_label}: {probability*100:.1f}%")
 
     return ', '.join(results)
+=======
+    for i in top_n_indices[0]:
+        class_label = class_translation.get(str(i), "Unknown")
+        probability = predictions[0][i] * 100  # Convert probability to percentage
+        results.append(f"{class_label}: {probability:.1f}%")
+    
+    return ", ".join(results)
+>>>>>>> 31044c2a42c9767b2b55d24c01c17da0c456e25b
