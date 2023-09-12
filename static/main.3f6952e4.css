@@ -5630,7 +5630,7 @@ button.close {
 #site-border-top {
     background: #000;
     position: fixed;
-    z-index: 1
+    z-index: 12000
 }
 
 #site-border-left,
@@ -6213,7 +6213,7 @@ textarea {
     /* Add this line to make the text bold */
     cursor: pointer;
     position: relative;
-    z-index: 1000;
+    z-index: 1;
     /* Make sure the button appears above the background */
 }
 
@@ -6234,4 +6234,31 @@ textarea {
     /* Each iframe occupies the full width */
     border: none;
     /* Remove border to avoid unnecessary spacing */
+}
+
+#loading-message {
+    display: none;
+    /* Initially hidden */
+    font-size: 1.5em;
+    text-align: center;
+}
+
+#loading-spinner {
+    display: none;
+    border: 8px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #000;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

@@ -8,32 +8,29 @@ import torch.nn as nn
 import torchvision.transforms as transforms
 import json
 import os
-
+ 
 
 def mobilnet_v2(img_dir, n=3):
     exec_path = os.getcwd()
 
     prediction = ImageClassification()
     prediction.setModelTypeAsMobileNetV2()
-    prediction.setModelPath(os.path.join(exec_path, "mobilenet_v2-b0353104.pth"))
+    prediction.setModelPath(os.path.join(exec_path, 'mobilenet_v2-b0353104.pth'))
     prediction.loadModel()
-
-    predictions, probabilities = prediction.classifyImage(
-        os.path.join(exec_path, img_dir), result_count=n
-    )
+    
+    predictions, probabilities = prediction.classifyImage(os.path.join(exec_path, img_dir), result_count=n)
 
     results = []
     for eachPred, eachProb in zip(predictions, probabilities):
-        results.append(f"{eachPred.capitalize()}: {eachProb:.1f}% ")
-    print("mobilenet_v2")
+        results.append(f'{eachPred.capitalize()}: {eachProb:.1f}% ')
 
-    return ", ".join(results)
+    return ', '.join(results)
 
 
 def simple_CNN(img_dir, n=3):
     with open("names_dict.json") as f:
         class_translation = json.load(f)
-
+        
     class SimpleCNN(nn.Module):
         def __init__(self, num_classes):
             super(SimpleCNN, self).__init__()
@@ -51,15 +48,13 @@ def simple_CNN(img_dir, n=3):
             return x
 
     model = SimpleCNN(num_classes=len(class_translation))
-    model.load_state_dict(torch.load("./squeezenet1_1-f364aa15.pth"))
+    model.load_state_dict(torch.load("./cnn_model_trained.pth"))
     model.eval()
 
-    transform = transforms.Compose(
-        [
-            transforms.Resize((224, 224)),
-            transforms.ToTensor(),
-        ]
-    )
+    transform = transforms.Compose([
+        transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+    ])
     input_image = Image.open(img_dir)
     input_tensor = transform(input_image).unsqueeze(0)
 
@@ -74,9 +69,8 @@ def simple_CNN(img_dir, n=3):
         class_label = str(class_idx.item())
         class_name = class_translation.get(class_label, "Unknown")
         results.append(f"{class_name}: {prob*100:.1f}%")
-    print("CNN")
 
-    return ", ".join(results)
+    return ', '.join(results)
 
 
 def resnet_50(img_dir, n=3):
@@ -85,7 +79,7 @@ def resnet_50(img_dir, n=3):
         class_translation = json.load(f)
 
     # Load the trained model
-    model = tf.keras.models.load_model("./resnet_model_tf.h5")
+    model = tf.keras.models.load_model('./resnet_model_tf.h5')
 
     # Load and preprocess the image for prediction
     img_path = img_dir  # Replace with the path to your image
@@ -98,7 +92,6 @@ def resnet_50(img_dir, n=3):
     predictions = model.predict(img_array)
     top_n = n  # Number of top predictions to display
 
-    # print(class_labels)
     # Get the indices of the top N predictions
     top_indices = np.argsort(predictions[0])[::-1][:top_n]
 
@@ -108,4 +101,4 @@ def resnet_50(img_dir, n=3):
         probability = predictions[0][top_indices[i]]
         results.append(f"{class_label}: {probability*100:.1f}%")
 
-    return ", ".join(results)
+    return ', '.join(results)

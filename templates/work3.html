@@ -78,38 +78,49 @@
                             pre-trained model (mobilnet_v2-b0353104.pth) known for its efficiency. The models have not
                             yet been been optimalized by fine-tuning the super-parameters. Some rare animals
                             might not be known to the CNN and ResNet-50 models, so surprises are always around the
-                            corner!</p>
+                            corner!
                         <p>
                             Got a photo of an animal? Upload it and see which model nails the classification. Discover
-                            how modern tech recognizes the animal kingdom.</p>
-                        <p>
-                            Simple CNN and ResNet50 Models not yet available due to large size, will be added soon!
-                        </p>
+                            how modern tech recognizes the animal kingdom.
                         </p>
                         <br>
-
+                        <!-- <h3>Come back to check soon as I am updating the trained models to be of smaller size.</h3> -->
                         <form id="imageUploadForm" enctype="multipart/form-data">
                             <input type="file" name="imageFile" id="imageFile">
                             <button type="button" onclick="uploadImage()">Upload</button>
                         </form>
                         <br>
+                        <div id="loading-spinner"></div>
+                        <div id="loading-message">Calculating predictions... <br></div>
+                        <div id="results"></div>
+
                         <div id="response"></div>
                         <div id="classification-result">
                             <div id="result-mnv2">
                                 <strong>MobileNetV2:</strong> <span class="mnv2-output"></span>
                             </div>
                             <br>
-                            <!-- <div id="result-cnn">
+                            <div id="result-cnn">
                                 <strong>Simple CNN:</strong> <span class="cnn-output"></span>
                             </div>
                             <br>
                             <div id="result-rn50">
                                 <strong>ResNet-50:</strong> <span class="rn50-output"></span>
-                            </div> -->
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12">
+                            <img id="uploadedImage" class="img-responsive" alt="">
                         </div>
 
                         <script>
                             function uploadImage() {
+                                // Show spinner
+                                document.getElementById('loading-spinner').style.display = 'inline-block';
+                                // Hide previous loading message if you wish
+                                document.getElementById('loading-message').style.display = 'none';
+
+                                console.log('Upload button clicked');
                                 const formData = new FormData();
                                 formData.append('imageFile', document.getElementById('imageFile').files[0]);
 
@@ -119,63 +130,28 @@
                                 })
                                     .then(response => response.json())
                                     .then(data => {
+                                        // Hide spinner
+                                        document.getElementById('loading-spinner').style.display = 'none';
+
+                                        console.log('Received data:', data);
                                         document.querySelector('.mnv2-output').innerText = data.mnv2;
-                                        // document.querySelector('.cnn-output').innerText = data.cnn;
-                                        // document.querySelector('.rn50-output').innerText = data.rn50;
+                                        document.querySelector('.cnn-output').innerText = data.cnn;
+                                        document.querySelector('.rn50-output').innerText = data.rn50;
+
+                                        const uploadedImageElement = document.getElementById('uploadedImage');
+                                        uploadedImageElement.src = 'uploaded_image.jpg';
                                     })
                                     .catch(error => {
+                                        // Hide spinner in case of error too
+                                        document.getElementById('loading-spinner').style.display = 'none';
+
                                         console.error('Error:', error);
                                     });
                             }
 
-                            fetch('/upload', {
-                                method: 'POST',
-                                body: formData
-                            })
-                                .then(response => response.json())
-                                .then(data => {
-                                    console.log("Received data:", data);
-                                    document.querySelector('.mnv2-output').innerText = data.mnv2;
-                                    // document.querySelector('.cnn-output').innerText = data.cnn;
-                                    // document.querySelector('.rn50-output').innerText = data.rn50;
-                                })
-                                .catch(error => {
-                                    console.error('Error:', error);
-                                });
-
                         </script>
-
                     </div>
                 </div>
-
-                <div class="col-xs-12">
-                    <img id="uploadedImage" class="img-responsive" alt="">
-                </div>
-                <script>
-                    function uploadImage() {
-                        const formData = new FormData();
-                        formData.append('imageFile', document.getElementById('imageFile').files[0]);
-
-                        fetch('/upload', {
-                            method: 'POST',
-                            body: formData
-                        })
-                            .then(response => response.json())
-                            .then(data => {
-                                document.querySelector('.mnv2-output').innerText = data.mnv2;
-                                // document.querySelector('.cnn-output').innerText = data.cnn;
-                                // document.querySelector('.rn50-output').innerText = data.rn50;
-
-                                // Update the image source here
-                                const uploadedImageElement = document.getElementById('uploadedImage');
-                                uploadedImageElement.src = 'uploaded_image.jpg';
-                            })
-                            .catch(error => {
-                                console.error('Error:', error);
-                            });
-                    }
-                </script>
-
             </div>
         </div>
     </div>
@@ -211,8 +187,8 @@
   ga('create', 'UA-XXXXX-X', 'auto');
   ga('send', 'pageview');
 </script>
-
 -->
+
     <script type="text/javascript" src="./static/main.70a66962.js"></script>
 </body>
 
